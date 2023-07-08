@@ -1,15 +1,15 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Layout, Text} from '@ui-kitten/components';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-export default function FeedScreen() {
+export default function CreateNewPostScreen() {
   const insets = useSafeAreaInsets();
   const styles = styleGenerator(insets);
 
   return (
     <Layout style={styles.container}>
-      <Text category="h1">Hello this is feed screen</Text>
+      <Text category="h2">Hello this is Create New Post Screen</Text>
     </Layout>
   );
 }
