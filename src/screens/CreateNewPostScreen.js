@@ -5,6 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {v4 as uuidv4} from 'uuid';
 import Toast from 'react-native-toast-message';
+import {useTranslation} from 'react-i18next';
 
 import {CreatePost} from '../service/Service';
 import {queryKey} from '../utils/Constants';
@@ -15,6 +16,7 @@ export default function CreateNewPostScreen({navigation}) {
   const insets = useSafeAreaInsets();
   const styles = styleGenerator(insets);
   const queryClient = useQueryClient();
+  const {t} = useTranslation();
   const [content, setContent] = useState('');
   const {mutate, isLoading} = useMutation({
     mutationFn: CreatePost,
@@ -42,7 +44,7 @@ export default function CreateNewPostScreen({navigation}) {
     <Layout style={styles.container}>
       <View style={styles.inputContainer}>
         <Input
-          placeholder="Type your post here..."
+          placeholder={`${t('common:type_your_post_here')}...`}
           multiline
           onChangeText={onChangeContent}
           value={content}
@@ -61,7 +63,7 @@ export default function CreateNewPostScreen({navigation}) {
           {isLoading ? (
             <Spinner size="small" status="control" />
           ) : (
-            <Text>POST</Text>
+            <Text>{t('common:post').toUpperCase()}</Text>
           )}
         </Button>
       </View>

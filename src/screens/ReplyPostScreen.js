@@ -5,6 +5,7 @@ import {useRoute} from '@react-navigation/native';
 import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
 import {v4 as uuidv4} from 'uuid';
 import Toast from 'react-native-toast-message';
+import {useTranslation} from 'react-i18next';
 
 import FeedItemComponent from '../components/FeedItemComponent';
 import {queryKey} from '../utils/Constants';
@@ -15,6 +16,7 @@ const maxChar = 100;
 export default function ReplyPostScreen() {
   const route = useRoute();
   const queryClient = useQueryClient();
+  const {t} = useTranslation();
   const {data} = route.params;
   const [content, setContent] = useState('');
   const {data: replies, isInitialLoading: isLoadingReplies} = useQuery({
@@ -76,7 +78,7 @@ export default function ReplyPostScreen() {
       )}
       <View style={styles.footer}>
         <Input
-          placeholder="Type your reply here..."
+          placeholder={t('common:type_your_reply_here')}
           style={styles.input}
           multiline
           onChangeText={onChangeReply}
@@ -91,7 +93,7 @@ export default function ReplyPostScreen() {
           {isLoading ? (
             <Spinner size="small" status="control" />
           ) : (
-            <Text>REPLY</Text>
+            <Text>{t('common:reply').toUpperCase()}</Text>
           )}
         </Button>
       </View>

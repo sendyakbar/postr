@@ -3,7 +3,7 @@ import {StyleSheet, FlatList, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Button, Layout, Spinner, Text} from '@ui-kitten/components';
 import {useQuery} from '@tanstack/react-query';
-import Toast from 'react-native-toast-message';
+import {useTranslation} from 'react-i18next';
 
 import {queryKey} from '../utils/Constants';
 import FeedItemComponent from '../components/FeedItemComponent';
@@ -12,6 +12,7 @@ import {GetPosts} from '../service/Service';
 export default function FeedScreen({navigation}) {
   const insets = useSafeAreaInsets();
   const styles = styleGenerator(insets);
+  const {t} = useTranslation();
   const {data, isLoading} = useQuery({
     queryKey: [queryKey.POSTS],
     queryFn: GetPosts,
@@ -43,7 +44,7 @@ export default function FeedScreen({navigation}) {
       />
       <View style={styles.footer}>
         <Button appearance="outline" onPress={onPressCreate}>
-          <Text>CREATE NEW POST</Text>
+          <Text>{t('common:create_new_post').toUpperCase()}</Text>
         </Button>
       </View>
     </Layout>
