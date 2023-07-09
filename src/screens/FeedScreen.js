@@ -55,11 +55,11 @@ const styleGenerator = insets =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
+      // Paddings to handle safe area
+      paddingBottom: insets.bottom,
     },
     container: {
       flexGrow: 1,
-      // Paddings to handle safe area
-      paddingBottom: insets.bottom,
       paddingHorizontal: 16,
     },
     footer: {
