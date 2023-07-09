@@ -5,8 +5,8 @@ import {t} from 'i18next';
 import {useTranslation} from 'react-i18next';
 
 const languages = [
-  {code: 'id', label: t('language:bahasa')},
-  {code: 'en', label: t('language:english')},
+  {code: 'id', label: 'Bahasa Indonesia'},
+  {code: 'en', label: 'English'},
 ];
 
 export default function LanguageSettingScreen({navigation}) {
