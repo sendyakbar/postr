@@ -35,6 +35,10 @@ export default function FeedItemComponent(data) {
             <Text>{`   ${date}/${month + 1}/${year}`}</Text>
           </Text>
           <Text style={styles.contentText}>{data.text}</Text>
+          <Text category="c1" status="warning" style={styles.location}>
+            {`Lat: ${data.geoLocation.latitude}   `} &bull;
+            {`    Lng: ${data.geoLocation.longitude}`}
+          </Text>
         </View>
       </TouchableOpacity>
       <Divider style={styles.divider} />
@@ -56,6 +60,9 @@ const styleGenerator = insets =>
       backgroundColor: 'white',
     },
     contentText: {
+      marginTop: 8,
+    },
+    location: {
       marginTop: 8,
     },
   });

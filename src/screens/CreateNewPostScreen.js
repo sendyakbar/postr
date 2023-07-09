@@ -6,6 +6,7 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {v4 as uuidv4} from 'uuid';
 import Toast from 'react-native-toast-message';
 import {useTranslation} from 'react-i18next';
+import Geolocation from '@react-native-community/geolocation';
 
 import {CreatePost} from '../service/Service';
 import {queryKey} from '../utils/Constants';
@@ -37,7 +38,17 @@ export default function CreateNewPostScreen({navigation}) {
 
   const onPressPost = () => {
     const userId = uuidv4();
-    mutate({userId, text: content});
+    Geolocation.getCurrentPosition(info => {
+      console.log(info);
+      mutate({
+        userId,
+        text: content,
+        geoLocation: {
+          latitude: info.coords.latitude,
+          longitude: info.coords.longitude,
+        },
+      });
+    });
   };
 
   return (
@@ -76,7 +87,7 @@ const styleGenerator = insets =>
     container: {
       flex: 1,
       // Paddings to handle safe area
-      paddingTop: insets.top,
+      paddingTop: 16,
       paddingBottom: insets.bottom,
       paddingHorizontal: 16,
     },

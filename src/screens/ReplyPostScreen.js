@@ -6,6 +6,8 @@ import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
 import {v4 as uuidv4} from 'uuid';
 import Toast from 'react-native-toast-message';
 import {useTranslation} from 'react-i18next';
+import Geolocation from '@react-native-community/geolocation';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import FeedItemComponent from '../components/FeedItemComponent';
 import {queryKey} from '../utils/Constants';
@@ -17,6 +19,8 @@ export default function ReplyPostScreen() {
   const route = useRoute();
   const queryClient = useQueryClient();
   const {t} = useTranslation();
+  const insets = useSafeAreaInsets();
+  const styles = styleGenerator(insets);
   const {data} = route.params;
   const [content, setContent] = useState('');
   const {data: replies, isInitialLoading: isLoadingReplies} = useQuery({
@@ -43,12 +47,18 @@ export default function ReplyPostScreen() {
 
   const onPressReply = () => {
     const userId = uuidv4();
-    mutate({
-      userId,
-      postId: data.id,
-      text: content,
+    Geolocation.getCurrentPosition(info => {
+      mutate({
+        userId,
+        postId: data.id,
+        text: content,
+        geoLocation: {
+          latitude: info.coords.latitude,
+          longitude: info.coords.longitude,
+        },
+      });
+      setContent('');
     });
-    setContent('');
   };
 
   const renderItem = ({item}) => {
@@ -106,42 +116,44 @@ export default function ReplyPostScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  replyItemContainer: {
-    paddingLeft: 32,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  repliesContainer: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-  },
-  header: {
-    paddingHorizontal: 16,
-  },
-  footer: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    backgroundColor: 'black',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-  },
-  input: {
-    flex: 1,
-    paddingRight: 8,
-  },
-  button: {
-    height: 39,
-  },
-  bottomInfo: {
-    backgroundColor: 'black',
-    paddingHorizontal: 16,
-    paddingVertical: 4,
-  },
-});
+const styleGenerator = insets =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingBottom: insets.bottom,
+    },
+    replyItemContainer: {
+      paddingLeft: 32,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    repliesContainer: {
+      flexGrow: 1,
+      paddingHorizontal: 16,
+    },
+    header: {
+      paddingHorizontal: 16,
+    },
+    footer: {
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      backgroundColor: 'black',
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
+    input: {
+      flex: 1,
+      paddingRight: 8,
+    },
+    button: {
+      height: 39,
+    },
+    bottomInfo: {
+      backgroundColor: 'black',
+      paddingHorizontal: 16,
+      paddingVertical: 4,
+    },
+  });

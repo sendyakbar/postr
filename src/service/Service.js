@@ -12,13 +12,14 @@ export const GetPosts = () => {
   });
 };
 
-export const CreatePost = ({userId, text}) => {
+export const CreatePost = ({userId, text, geoLocation}) => {
   return new Promise((resolve, reject) => {
     const post = {
       id: uuidv4(),
       userId,
       text,
       createdAt: new Date(),
+      geoLocation,
     };
     if (text.length > 100) {
       reject('Maximum 100 characters');
@@ -44,7 +45,7 @@ export const GetReplies = postId => {
   });
 };
 
-export const CreateReplies = ({userId, postId, text}) => {
+export const CreateReplies = ({userId, postId, text, geoLocation}) => {
   return new Promise((resolve, reject) => {
     const post = {
       id: uuidv4(),
@@ -52,6 +53,7 @@ export const CreateReplies = ({userId, postId, text}) => {
       userId,
       text,
       createdAt: new Date(),
+      geoLocation,
     };
     if (text.length > 100) {
       reject('Maximum 100 characters');
