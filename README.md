@@ -1,3 +1,15 @@
+# Overview
+This app using data mocking to demonstrate CRUD function.
+This app is very basic but it's scalable. It's possible if it has user database, userPosts database, authentication, reaction for its post, etc.
+# Libraries
+- React Native version 0.72.1
+- React Navigation version 6.1.7
+- UI Kitten version 5.3.1
+- uuid version 9.0.0
+- React Query version 4.29.19
+- React i18next version 13.0.1
+- React Native Toast Message version 2.1.6
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
